@@ -1,7 +1,7 @@
-screens2lex
+screens2tex
 ===========
 
-`screens2lex` is a utility tool that takes the screenshots documenting your work and makes a `.lex` files neatly arranging them.\
+`screens2tex` is a utility tool that takes the screenshots documenting your work and makes a `.tex` files neatly arranging them.\
 All that's left is rendering the final document.
 
 ### If you're lazy like me and want 1 command to make it a pdf
