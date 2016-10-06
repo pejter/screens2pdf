@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"text/template"
 )
@@ -16,6 +17,8 @@ type exercise struct {
 }
 
 func main() {
+	validExtensions := []string{"jpg", "png", "pdf"}
+	sort.Strings(validExtensions)
 	var (
 		exerciseDirectory    string
 		exerciseTitle        string
@@ -47,7 +50,11 @@ func main() {
 
 	exerciseData := exercise{exerciseTitle, nil}
 	for _, s := range screenList {
-		exerciseData.ScreenList = append(exerciseData.ScreenList, strings.TrimSuffix(s.Name(), filepath.Ext(s.Name())))
+		ext := filepath.Ext(s.Name())
+		i := sort.SearchStrings(validExtensions, ext)
+		if i < len(validExtensions) && ext == validExtensions[i] {
+			exerciseData.ScreenList = append(exerciseData.ScreenList, strings.TrimSuffix(s.Name(), ext))
+		}
 	}
 
 	t, err := template.ParseFiles("template.tex")
