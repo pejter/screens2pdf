@@ -17,7 +17,7 @@ type exercise struct {
 }
 
 func main() {
-	validExtensions := []string{"jpg", "png", "pdf"}
+	validExtensions := []string{".jpg", ".png", ".pdf"}
 	sort.Strings(validExtensions)
 	var (
 		exerciseDirectory    string
