@@ -51,8 +51,8 @@ func main() {
 	exerciseData := exercise{exerciseTitle, nil}
 	for _, s := range screenList {
 		ext := filepath.Ext(s.Name())
-		i := sort.SearchStrings(validExtensions, ext)
-		if i < len(validExtensions) && ext == validExtensions[i] {
+		i := sort.SearchStrings(validExtensions, strings.ToLower(ext))
+		if i < len(validExtensions) && strings.ToLower(ext) == validExtensions[i] {
 			exerciseData.ScreenList = append(exerciseData.ScreenList, strings.TrimSuffix(s.Name(), ext))
 		}
 	}
