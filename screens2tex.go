@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"log"
 	"os"
@@ -15,12 +16,33 @@ type exercise struct {
 }
 
 func main() {
-	exerciseDirectory := os.Args[1]
-	exerciseTitle := os.Args[2]
+	var (
+		exerciseDirectory    string
+		exerciseTitle        string
+		screenshotsDirectory string
+	)
 
-	screenList, err := ioutil.ReadDir(exerciseDirectory + "/screens")
+	flag.StringVar(&exerciseDirectory, "dir", "", "Location of the exercise")
+	flag.StringVar(&exerciseDirectory, "d", "", "Location of the exercise")
+	flag.StringVar(&exerciseTitle, "title", "", "Title of the exercise")
+	flag.StringVar(&exerciseTitle, "t", "", "Title of the exercise")
+	flag.StringVar(&screenshotsDirectory, "scrotdir", "", "Location of the screenshots")
+	flag.StringVar(&screenshotsDirectory, "s", "", "Location of the screenshots")
+
+	flag.Parse()
+	if exerciseTitle == "" {
+		log.Fatal("You must specify a name for the exercise")
+	}
+	if exerciseDirectory == "" {
+		log.Fatal("You must specify a directory for the exercise")
+	}
+	if screenshotsDirectory == "" {
+		screenshotsDirectory = exerciseDirectory + "/screens"
+	}
+
+	screenList, err := ioutil.ReadDir(screenshotsDirectory)
 	if err != nil {
-		log.Fatal("Couldn't read files inside "+exerciseDirectory+"/screens"+"!\n", err)
+		log.Fatal("Couldn't read files inside "+screenshotsDirectory+"!\n", err)
 	}
 
 	exerciseData := exercise{exerciseTitle, nil}
