@@ -1,0 +1,24 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage[margin=5mm]{geometry}
+
+\graphicspath{ {screens/} }
+\setlength{\parindent}{0pt}
+
+\title{{ "{" }}{{ .Title }}{{ "}" }}
+\author{Piotr Łuczak}
+
+\begin{document}
+\maketitle
+
+{{ range .ScreenList }}
+\includegraphics[width=\textwidth]{{ "{" }}{{ . }}{{ "}" }}
+\par
+\vspace{5mm}
+{{ end }}
+
+\end{document}
