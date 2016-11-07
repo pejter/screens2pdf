@@ -1,0 +1,9 @@
+FROM golang:alpine
+MAINTAINER Piotr Łuczak<piotrluczak1995@gmail.com>
+
+
+COPY template.tex .
+COPY screens2pdf.go .
+RUN go build screens2pdf.go
+
+ENTRYPOINT ["./screens2pdf", "--no-pdf"]

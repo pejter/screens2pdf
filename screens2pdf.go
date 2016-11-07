@@ -52,15 +52,15 @@ func generateTex(exerciseDirectory, exerciseTitle, screenshotsDirectory string) 
 
 func generatePDF(exerciseTexFile string) {
 	pdfDir := filepath.Dir(exerciseTexFile)
-	fmt.Println("Writing into "+pdfDir)
+	fmt.Println("Writing into " + pdfDir)
 	output, err := exec.Command("pdflatex", "-interaction=batchmode", "-output-directory="+pdfDir, exerciseTexFile).Output()
 	if err != nil {
 		log.Println("Could not generate PDF: ", err)
 	} else {
 		fmt.Printf("%s\n", output)
 	}
-	os.Remove(pdfDir+"/final.log")
-	os.Remove(pdfDir+"/final.aux")
+	os.Remove(pdfDir + "/final.log")
+	os.Remove(pdfDir + "/final.aux")
 }
 
 func main() {
@@ -68,6 +68,7 @@ func main() {
 		exerciseDirectory    string
 		exerciseTitle        string
 		screenshotsDirectory string
+		noPDF                bool
 	)
 
 	flag.StringVar(&exerciseDirectory, "dir", "", "Location of the exercise")
@@ -76,6 +77,7 @@ func main() {
 	flag.StringVar(&exerciseTitle, "t", "", "Title of the exercise")
 	flag.StringVar(&screenshotsDirectory, "scrotdir", "", "Location of the screenshots")
 	flag.StringVar(&screenshotsDirectory, "s", "", "Location of the screenshots")
+	flag.BoolVar(&noPDF, "--no-pdf", false, "Do not generate PDF")
 
 	flag.Parse()
 	if exerciseTitle == "" {
@@ -90,7 +92,9 @@ func main() {
 
 	fmt.Println("Generating .tex from", exerciseDirectory)
 	generateTex(exerciseDirectory, exerciseTitle, screenshotsDirectory)
-	fmt.Println("Generating PDF...")
-	generatePDF(exerciseDirectory + "/final.tex")
+	if !noPDF {
+		fmt.Println("Generating PDF...")
+		generatePDF(exerciseDirectory + "/final.tex")
+	}
 	fmt.Println("Done")
 }
