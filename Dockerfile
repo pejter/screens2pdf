@@ -1,8 +1,13 @@
-FROM golang:alpine
+FROM golang:latest
 MAINTAINER Piotr Łuczak<piotrluczak1995@gmail.com>
 
-COPY screens2tex.go .
-COPY template.tex .
-RUN go build screens2tex.go
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	texlive-base \
+	texlive-lang-all \
+&& apt-get clean
 
-ENTRYPOINT ["./screens2tex"]
+COPY template.tex .
+COPY screens2pdf.go .
+RUN go build screens2pdf.go
+
+ENTRYPOINT ["./screens2pdf"]
